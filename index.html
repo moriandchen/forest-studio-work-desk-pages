@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Forest Studio Work Desk — Production Stage A</title>
+<title>Forest Studio Work Desk — Production Stage E.2.2 · Optimization 002</title>
 <style>
 :root{
-  --bg:#f4f7fb;
-  --bg-2:#eef3f8;
+  --bg:#f6f7f9;
+  --bg-2:#f0f3f6;
   --panel:#ffffff;
-  --panel-soft:#f6f9fc;
-  --line:#dbe4ee;
-  --line-soft:#e8eef5;
-  --text:#1f2933;
-  --muted:#738091;
-  --heading:#16202a;
-  --accent:#71879d;
-  --accent-strong:#4d6479;
-  --accent-soft:#e7eef5;
-  --slate:#8fa1b3;
-  --ink:#243140;
-  --shadow:0 14px 36px rgba(47, 74, 98, .08);
-  --shadow-soft:0 8px 20px rgba(47, 74, 98, .04);
+  --panel-soft:#f8fafb;
+  --line:#d6dee6;
+  --line-soft:#e8edf2;
+  --text:#25313b;
+  --muted:#687684;
+  --heading:#17222c;
+  --accent:#74899b;
+  --accent-strong:#465f73;
+  --accent-soft:#e9eef3;
+  --slate:#91a0ae;
+  --ink:#23313f;
+  --shadow:0 14px 36px rgba(45, 61, 74, .075);
+  --shadow-soft:0 8px 20px rgba(45, 61, 74, .04);
   --radius-xl:28px;
   --radius-lg:20px;
   --radius-md:15px;
@@ -30,8 +30,8 @@
 html,body{
   margin:0;
   background:
-    radial-gradient(circle at top left, #f8fbff 0%, transparent 32%),
-    linear-gradient(180deg, #f6f9fc 0%, #f1f5f9 100%);
+    radial-gradient(circle at top left, #fcfdfe 0%, transparent 32%),
+    linear-gradient(180deg, #f8f9fb 0%, #f2f5f7 100%);
   color:var(--text);
   font-family:Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
   "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif
@@ -41,47 +41,48 @@ button{cursor:pointer}
 .app{min-height:100vh;display:grid;grid-template-columns:238px 1fr}
 .sidebar{
   position:sticky;top:0;height:100vh;padding:28px 18px 22px;
-  border-right:1px solid var(--line);background:rgba(250,252,255,.92);
+  border-right:1px solid var(--line);background:rgba(252,253,254,.94);
   backdrop-filter:blur(14px);
   display:flex;flex-direction:column;gap:26px
 }
 .brand{display:flex;align-items:center;gap:12px;padding:0 10px}
 .brand-mark{
   width:42px;height:42px;border-radius:14px;
-  background:linear-gradient(145deg, #233244 0%, #3a5066 100%);
+  background:linear-gradient(145deg, #273746 0%, #42596c 100%);
   color:white;display:grid;place-items:center;
   font-family:Georgia,serif;font-size:23px;
   box-shadow:var(--shadow-soft)
 }
-.brand-text strong{display:block;font-size:14px;letter-spacing:.02em;color:var(--heading)}
-.brand-text span{font-size:11px;color:var(--muted)}
+.brand-text strong{display:block;font-size:15px;letter-spacing:.02em;color:var(--heading)}
+.brand-text span{font-size:12px;color:var(--muted)}
 .nav{display:flex;flex-direction:column;gap:7px}
 .nav button{
   border:0;background:transparent;padding:12px 13px;border-radius:13px;text-align:left;
+  font-size:14px;
   color:#5f6d7b;display:flex;align-items:center;justify-content:space-between;
   transition:.18s ease
 }
-.nav button:hover{background:#f3f7fb;color:var(--heading)}
+.nav button:hover{background:#f2f5f7;color:var(--heading)}
 .nav button.active{
-  background:linear-gradient(180deg,#eef4fa 0%, #e8eff7 100%);
+  background:linear-gradient(180deg,#eef2f5 0%, #e8edf2 100%);
   color:var(--ink);font-weight:700;
-  box-shadow:inset 0 0 0 1px #dde7f0
+  box-shadow:inset 0 0 0 1px #d9e1e8
 }
-.nav small{font-size:11px;color:#9aa7b5}
+.nav small{font-size:11.5px;color:#9aa7b5}
 .sidebar-note{
-  margin-top:auto;border:1px solid var(--line);background:linear-gradient(180deg,#ffffff 0%,#f7fafd 100%);
+  margin-top:auto;border:1px solid var(--line);background:linear-gradient(180deg,#ffffff 0%,#f8fafb 100%);
   border-radius:18px;padding:14px;box-shadow:var(--shadow-soft)
 }
-.sidebar-note .kicker{font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:800}
-.sidebar-note p{font-size:12px;line-height:1.6;margin:7px 0 0;color:#627080}
+.sidebar-note .kicker{font-size:11px;letter-spacing:.12em;color:var(--muted);font-weight:800}
+.sidebar-note p{font-size:13px;line-height:1.6;margin:7px 0 0;color:#627080}
 .main{padding:34px clamp(24px,4vw,58px) 54px;max-width:1440px;width:100%;margin:0 auto}
 .topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
-.eyebrow{font-size:11px;letter-spacing:.13em;color:var(--muted);font-weight:800;text-transform:uppercase}
+.eyebrow{font-size:12px;letter-spacing:.13em;color:var(--muted);font-weight:800;text-transform:uppercase}
 h1{
   font-family:Georgia,"Noto Serif TC",serif;
-  font-size:38px;line-height:1.15;margin:9px 0 7px;font-weight:500;color:var(--heading)
+  font-size:42px;line-height:1.13;margin:9px 0 7px;font-weight:500;color:var(--heading)
 }
-.sub{font-size:14px;color:var(--muted)}
+.sub{font-size:15px;color:var(--muted)}
 .avatar{
   width:44px;height:44px;border-radius:50%;
   background:linear-gradient(180deg,#ffffff 0%,#eef4fa 100%);
@@ -105,8 +106,8 @@ h1{
 .stat strong{display:block;font-size:23px;font-weight:650;color:var(--heading)}
 .stat span{font-size:10px;color:var(--muted);letter-spacing:.05em}
 .section-head{display:flex;justify-content:space-between;align-items:center;margin:30px 2px 14px}
-.section-head h3{margin:0;font-size:14px;color:var(--heading)}
-.section-head button{border:0;background:transparent;color:var(--muted);font-size:12px}
+.section-head h3{margin:0;font-size:16px;color:var(--heading)}
+.section-head button{border:0;background:transparent;color:var(--muted);font-size:13px}
 .modules{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 .module{
   min-height:176px;border:1px solid var(--line);background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%);
@@ -155,7 +156,7 @@ h1{
   background:#f9fbfd;color:#6d7b89
 }
 .pin{
-  background:linear-gradient(180deg,#ffffff 0%,#f8fbfe 100%);
+  background:linear-gradient(180deg,#ffffff 0%,#f8fafb 100%);
   border:1px solid var(--line);border-radius:17px;padding:16px;min-height:126px;
   display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow-soft)
 }
@@ -175,7 +176,7 @@ h1{
   font-size:11px;font-weight:700;color:var(--ink)
 }
 .arrow{color:#9ba9b7}
-.footer{margin-top:32px;color:#9aa6b2;font-size:10px;text-align:center}
+.footer{margin-top:32px;color:#8d99a5;font-size:11px;text-align:center}
 .mobilebar{display:none}
 .view{display:none}
 .view.active{display:block}
@@ -197,7 +198,7 @@ h1{
   .app{display:block}
   .sidebar{display:none}
   .main{padding:24px 17px 92px}
-  h1{font-size:31px}
+  h1{font-size:34px}
   .hero{grid-template-columns:1fr}
   .hero .stats{justify-content:flex-start}
   .modules{grid-template-columns:1fr 1fr}
@@ -238,24 +239,24 @@ h1{
   width:66px;height:66px;margin:0 auto 22px;border-radius:22px;
   display:grid;place-items:center;
   font-family:Georgia,serif;font-size:34px;color:white;
-  background:linear-gradient(145deg,#243547 0%,#4f687f 100%);
+  background:linear-gradient(145deg,#293a49 0%,#526a7c 100%);
   box-shadow:0 18px 45px rgba(55,82,106,.14);
 }
 .launch-kicker{
-  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
   color:#8c9aab;font-weight:800;margin-bottom:11px
 }
 .launch-title{
   margin:0;color:#172330;
   font-family:Georgia,"Noto Serif TC",serif;
-  font-size:34px;font-weight:500;letter-spacing:.01em
+  font-size:37px;font-weight:500;letter-spacing:.01em
 }
 .launch-sub{
-  margin-top:10px;color:#8290a0;font-size:12px;letter-spacing:.04em
+  margin-top:10px;color:#758392;font-size:13px;letter-spacing:.04em
 }
 .launch-enter{
   margin-top:28px;border:1px solid #dbe4ee;background:rgba(255,255,255,.82);
-  color:#53687c;border-radius:999px;padding:10px 17px;font-size:11px;
+  color:#4f6476;border-radius:999px;padding:10px 17px;font-size:12px;
   box-shadow:0 8px 18px rgba(47,74,98,.04);
 }
 .launch-enter:hover{background:white}
@@ -264,7 +265,7 @@ h1{
 }
 
 
-/* Production Stage E — hierarchy refinement */
+/* Production Stage E.2.2 — hierarchy refinement */
 .today-focus{
   margin-top:28px;
   display:grid;
@@ -275,8 +276,8 @@ h1{
   position:relative;overflow:hidden;
   border:1px solid var(--line);
   background:
-    radial-gradient(circle at 85% 15%,rgba(205,220,234,.55),transparent 33%),
-    linear-gradient(135deg,#ffffff 0%,#f3f7fb 100%);
+    radial-gradient(circle at 85% 15%,rgba(214,222,229,.62),transparent 33%),
+    linear-gradient(135deg,#ffffff 0%,#f4f6f8 100%);
   border-radius:var(--radius-xl);
   padding:26px;
   box-shadow:var(--shadow);
@@ -288,20 +289,20 @@ h1{
   border:1px solid rgba(112,136,157,.10);
 }
 .focus-kicker{
-  font-size:10px;font-weight:800;letter-spacing:.15em;color:#8a98a7;
+  font-size:11px;font-weight:800;letter-spacing:.15em;color:#8a98a7;
   text-transform:uppercase
 }
 .focus-main h2{
-  margin:10px 0 7px;font-size:23px;color:var(--heading);font-weight:650
+  margin:10px 0 7px;font-size:25px;color:var(--heading);font-weight:650
 }
 .focus-main p{
-  margin:0;color:var(--muted);font-size:12px;line-height:1.65;max-width:620px
+  margin:0;color:var(--muted);font-size:13.5px;line-height:1.65;max-width:620px
 }
 .focus-actions{
   display:flex;gap:9px;flex-wrap:wrap;margin-top:22px
 }
 .primary-btn,.ghost-btn{
-  border-radius:12px;padding:10px 14px;font-size:11px;font-weight:700
+  border-radius:12px;padding:10px 14px;font-size:12px;font-weight:700
 }
 .primary-btn{
   border:0;color:white;
@@ -319,49 +320,49 @@ h1{
 
 .focus-side{
   border:1px solid var(--line);
-  background:linear-gradient(180deg,#ffffff 0%,#f8fbfe 100%);
+  background:linear-gradient(180deg,#ffffff 0%,#f8fafb 100%);
   border-radius:var(--radius-xl);
   padding:21px;box-shadow:var(--shadow-soft);
   display:flex;flex-direction:column
 }
 .focus-side .label{
-  font-size:10px;color:var(--muted);font-weight:800;letter-spacing:.12em
+  font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.12em
 }
 .focus-side h3{
-  margin:12px 0 4px;font-size:16px;color:var(--heading)
+  margin:12px 0 4px;font-size:18px;color:var(--heading)
 }
 .focus-side p{
-  margin:0;color:var(--muted);font-size:11px;line-height:1.6
+  margin:0;color:var(--muted);font-size:12.5px;line-height:1.6
 }
 .focus-side .doc-open{
   margin-top:auto;align-self:flex-start;
   border:1px solid var(--line);background:#f8fbfe;color:var(--ink);
-  border-radius:11px;padding:9px 12px;font-size:11px;font-weight:700
+  border-radius:11px;padding:9px 12px;font-size:12px;font-weight:700
 }
 
 .section-head.compact{margin-top:26px}
 .toolstrip{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px
 }
 .toolmini{
   border:1px solid var(--line);background:rgba(255,255,255,.82);
-  border-radius:17px;padding:14px;
-  display:grid;grid-template-columns:34px minmax(0,1fr) auto;
+  border-radius:17px;padding:15px 16px;
+  display:grid;grid-template-columns:36px minmax(0,1fr) auto;
   gap:10px;align-items:center;box-shadow:var(--shadow-soft);
   transition:.18s ease
 }
 .toolmini:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
 .toolmini .miniicon{
-  width:34px;height:34px;border-radius:11px;
-  background:#eef4f9;display:grid;place-items:center;
+  width:36px;height:36px;border-radius:11px;
+  background:#eef2f5;display:grid;place-items:center;
   font-size:11px;font-weight:800;color:var(--accent-strong);
   border:1px solid #e2eaf2
 }
-.toolmini strong{display:block;font-size:12px;color:var(--heading)}
-.toolmini span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.toolmini strong{display:block;font-size:14px;color:var(--heading)}
+.toolmini span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
 .toolmini button{
   width:auto;min-width:48px;height:30px;padding:0 10px;border:1px solid var(--line);
-  background:#fff;border-radius:9px;color:#617487;font-size:10px;font-weight:800
+  background:#fff;border-radius:9px;color:#566a7b;font-size:11px;font-weight:800
 }
 
 .resume-card{
@@ -394,11 +395,11 @@ h1{
   background:rgba(255,255,255,.72);border-radius:16px;padding:13px 15px
 }
 .workflow-note p{
-  margin:0;font-size:10px;color:#8794a2;letter-spacing:.02em
+  margin:0;font-size:11px;color:#7b8895;letter-spacing:.02em
 }
 .workflow-note .path{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  color:#617487;font-size:10px;font-weight:700
+  color:#566a7b;font-size:11px;font-weight:700
 }
 .workflow-note .path b{font-weight:800;color:var(--ink)}
 
@@ -411,7 +412,7 @@ h1{
 @media(max-width:620px){
   .toolstrip{grid-template-columns:1fr}
   .focus-main{padding:22px}
-  .focus-main h2{font-size:20px}
+  .focus-main h2{font-size:22px}
   .workflow-note{align-items:flex-start;flex-direction:column}
 }
 
@@ -433,7 +434,7 @@ h1{
 }
 
 
-/* Production Stage E — persistent real-use preparation */
+/* Production Stage E.2.2 — persistent real-use preparation */
 .settings-sheet{
   position:fixed;inset:0;z-index:1200;
   background:rgba(28,40,52,.22);
@@ -448,21 +449,21 @@ h1{
   border-radius:24px;box-shadow:0 30px 80px rgba(35,52,68,.18);
   padding:24px
 }
-.settings-panel h3{margin:0;font-size:18px;color:var(--heading)}
-.settings-panel .hint{margin:6px 0 20px;color:var(--muted);font-size:11px;line-height:1.6}
+.settings-panel h3{margin:0;font-size:19px;color:var(--heading)}
+.settings-panel .hint{margin:6px 0 20px;color:var(--muted);font-size:12px;line-height:1.6}
 .form-row{display:grid;gap:7px;margin-bottom:14px}
-.form-row label{font-size:10px;font-weight:800;letter-spacing:.08em;color:#7a8998}
+.form-row label{font-size:11px;font-weight:800;letter-spacing:.08em;color:#7a8998}
 .form-row input{
   width:100%;border:1px solid var(--line);background:#f9fbfd;color:var(--heading);
-  border-radius:12px;padding:11px 12px;outline:none
+  border-radius:12px;padding:12px 13px;outline:none;font-size:14px
 }
 .form-row input:focus{border-color:#b7c7d6;background:white}
 .sheet-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
 .sheet-actions button{
-  border-radius:11px;padding:9px 13px;font-size:11px;font-weight:700
+  border-radius:11px;padding:9px 13px;font-size:12px;font-weight:700
 }
 .sheet-cancel{border:1px solid var(--line);background:white;color:var(--ink)}
-.sheet-save{border:0;background:#334b61;color:white}
+.sheet-save{border:0;background:#344b5e;color:white}
 .pin .doc-open{cursor:pointer}
 .pin .doc-edit{
   margin-left:7px;border:0;background:transparent;color:var(--muted);
@@ -480,32 +481,32 @@ h1{
 .transfer-badge{
   display:inline-flex;align-items:center;gap:6px;
   margin-top:14px;padding:7px 10px;border:1px solid #dfe7ef;
-  border-radius:999px;background:#f7fafc;color:#6e8092;font-size:9px;
+  border-radius:999px;background:#f7f9fa;color:#627586;font-size:10px;
   letter-spacing:.03em
 }
 
 
-/* Production Stage E — first real handoff */
+/* Production Stage E.2.2 — first real handoff */
 .handoff-card{
   display:none;
   margin-top:18px;
   border:1px solid #cfdce8;
-  background:linear-gradient(135deg,#f8fbff 0%,#edf4fa 100%);
+  background:linear-gradient(135deg,#fafcfd 0%,#eef3f6 100%);
   border-radius:18px;
   padding:17px 18px;
   box-shadow:var(--shadow-soft)
 }
 .handoff-card.show{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
 .handoff-card .kicker{
-  font-size:9px;letter-spacing:.14em;font-weight:800;color:#71869a;text-transform:uppercase
+  font-size:10px;letter-spacing:.14em;font-weight:800;color:#71869a;text-transform:uppercase
 }
-.handoff-card h3{margin:6px 0 4px;font-size:15px;color:var(--heading)}
-.handoff-card p{margin:0;font-size:11px;line-height:1.55;color:var(--muted)}
+.handoff-card h3{margin:6px 0 4px;font-size:16px;color:var(--heading)}
+.handoff-card p{margin:0;font-size:12px;line-height:1.55;color:var(--muted)}
 .handoff-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .handoff-actions button{
-  border-radius:11px;padding:9px 12px;font-size:10px;font-weight:800
+  border-radius:11px;padding:9px 12px;font-size:11px;font-weight:800
 }
-.handoff-send{border:0;background:#334c62;color:white}
+.handoff-send{border:0;background:#344b5e;color:white}
 .handoff-clear{border:1px solid var(--line);background:white;color:#6e7d8c}
 .test-link{
   border:0;background:transparent;color:#8b98a5;font-size:10px;padding:0;cursor:pointer
@@ -518,7 +519,7 @@ h1{
 
 .bridge-state{
   display:inline-flex;align-items:center;gap:6px;
-  margin-left:2px;font-size:9px;color:#7c8d9d;
+  margin-left:2px;font-size:10px;color:#708292;
   letter-spacing:.03em
 }
 .bridge-dot{
@@ -652,7 +653,7 @@ h1{
         </div>
       </section>
 
-      <div class="footer">Forest Studio · Work Desk Production Stage E.2.2 · Simplified Tools Desk</div>
+      <div class="footer">Forest Studio · Work Desk Production Stage E.2.2 · Optimization 002</div>
     </section>
 
 
@@ -700,7 +701,30 @@ h1{
 </div>
 
 <script>
-const appLinks = JSON.parse(localStorage.getItem('forestWorkDeskLinks') || '{}');
+/* ---------- Storage helper ----------
+   Small wrapper so every localStorage read/write goes through one place:
+   easier to add error handling, and easier to change storage strategy later
+   without hunting down every getItem/setItem call. */
+function loadStore(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    console.warn('讀取 ' + key + ' 失敗', e);
+    return fallback;
+  }
+}
+function saveStore(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (e) {
+    console.warn('保存 ' + key + ' 失敗', e);
+    return false;
+  }
+}
+
+const appLinks = loadStore('forestWorkDeskLinks', {});
 
 function nowCopy(){
   const d = new Date();
@@ -777,7 +801,7 @@ function saveSingleLink(key, label){
   const next = val.trim();
   if(next){
     appLinks[key]=next;
-    localStorage.setItem('forestWorkDeskLinks',JSON.stringify(appLinks));
+    saveStore('forestWorkDeskLinks', appLinks);
   }
   return next;
 }
@@ -817,7 +841,7 @@ if(editLinks){
       const val=prompt(label+' URL：', next[key]||'');
       if(val!==null) next[key]=val.trim();
     }
-    localStorage.setItem('forestWorkDeskLinks',JSON.stringify(next));
+    saveStore('forestWorkDeskLinks', next);
     Object.assign(appLinks,next);
     alert('Work Tools links 已儲存在這部瀏覽器。');
   });
@@ -829,7 +853,7 @@ const defaultPin = {
   desc:'把每天最常开的表格、模板或参考文件固定在这里，不用再找。',
   url:''
 };
-let pinnedDoc = JSON.parse(localStorage.getItem('forestWorkDeskPinned') || 'null') || defaultPin;
+let pinnedDoc = loadStore('forestWorkDeskPinned', null) || defaultPin;
 
 function renderPinned(){
   document.querySelector('#pinnedTitle').textContent = pinnedDoc.title || defaultPin.title;
@@ -871,7 +895,7 @@ document.querySelector('#sheetSave').addEventListener('click',()=>{
     desc:document.querySelector('#pinDescInput').value.trim(),
     url:document.querySelector('#pinUrlInput').value.trim()
   };
-  localStorage.setItem('forestWorkDeskPinned',JSON.stringify(pinnedDoc));
+  saveStore('forestWorkDeskPinned', pinnedDoc);
   renderPinned();
   closeSheet();
 });
