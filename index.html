@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Forest Studio Work Desk — Production Stage E.2.3 · Remote Inbox P0</title>
+<title>Forest Studio Work Desk — Production Stage E.2.3.1 · Remote Inbox P0</title>
 <style>
 :root{
   --bg:#f6f7f9;
@@ -683,7 +683,7 @@ h1{
         </div>
       </section>
 
-      <div class="footer">Forest Studio · Work Desk Production Stage E.2.3 · Remote Inbox P0</div>
+      <div class="footer">Forest Studio · Work Desk Production Stage E.2.3.1 · Remote Inbox P0</div>
     </section>
 
 
@@ -768,6 +768,7 @@ h1{
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// REMOTE_INBOX_P0_RECEIPT_BOUNDARY_FIX_001
 /* ---------- Storage helper ----------
    Small wrapper so every localStorage read/write goes through one place:
    easier to add error handling, and easier to change storage strategy later
@@ -1342,18 +1343,32 @@ async function sendCurrentHandoffToLiubai(){
       throw new Error(result.error || 'handoff-failed');
     }
 
-    setBridgeState('busy','正在打开留白');
-    if(sendButton) sendButton.textContent = 'Opening 留白…';
+    // Local Bridge 008 + Liubai v1.9 receiver has no browser-to-Bridge
+    // completion callback. A successful /handoff response means the Bridge
+    // has accepted the payload and launched the proven Liubai import path.
+    // For the Cloud Inbox queue, this is the correct completion boundary.
+    setBridgeState('ok','已交給留白');
+    if(sendButton){
+      sendButton.textContent = 'Sent to 留白 ✓';
+      setTimeout(()=>sendButton.textContent = originalLabel, 2200);
+    }
 
-    const imported=await pollLiubaiImportStatus(transferId, sendButton, originalLabel);
-    if(imported && sourceQueueId){
-      await updateCloudHandoffStatus(sourceQueueId,'completed',{completed_at:new Date().toISOString()});
-      activeHandoff=null;
-      saveActiveHandoff();
-      setTimeout(()=>{
-        renderHandoff();
-        pollWorkDeskCloudInbox();
-      },900);
+    if(sourceQueueId){
+      const completed = await updateCloudHandoffStatus(
+        sourceQueueId,
+        'completed',
+        {completed_at:new Date().toISOString()}
+      );
+      if(completed){
+        activeHandoff=null;
+        saveActiveHandoff();
+        setTimeout(()=>{
+          renderHandoff();
+          pollWorkDeskCloudInbox();
+        },900);
+      }else{
+        setCloudInboxState('error','Cloud Inbox · Status not saved');
+      }
     }
   }catch(error){
     console.warn('Local Bridge handoff failed', error);
