@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Forest Studio Work Desk — Production Stage E.2.3.1 · Remote Inbox P0</title>
+<title>Forest Studio Work Desk — Production Stage E.2.3.2 · GitHub Pages Link Migration</title>
 <style>
 :root{
   --bg:#f6f7f9;
@@ -683,7 +683,7 @@ h1{
         </div>
       </section>
 
-      <div class="footer">Forest Studio · Work Desk Production Stage E.2.3.1 · Remote Inbox P0</div>
+      <div class="footer">Forest Studio · Work Desk Production Stage E.2.3.2 · GitHub Pages Link Migration</div>
     </section>
 
 
@@ -792,7 +792,16 @@ function saveStore(key, value) {
   }
 }
 
+const DESK_LAH_PRODUCTION_URL='https://moriandchen.github.io/desk-lah-pages/';
 const appLinks = loadStore('forestWorkDeskLinks', {});
+
+// Production link migration: Desk Lah! moved from Netlify to GitHub Pages.
+// Keep any deliberate non-Netlify custom link, but migrate the old/default location automatically.
+if(!String(appLinks.desk||'').trim() || /netlify\.app/i.test(String(appLinks.desk||''))){
+  appLinks.desk=DESK_LAH_PRODUCTION_URL;
+  saveStore('forestWorkDeskLinks', appLinks);
+}
+
 
 function nowCopy(){
   const d = new Date();
@@ -902,7 +911,7 @@ if(editLinks){
   editLinks.addEventListener('click',()=>{
     const keys=[
       ['desk','Desk Lah!'],
-      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.4）']
+      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.5）']
     ];
     let next={...appLinks};
     for(const [key,label] of keys){
