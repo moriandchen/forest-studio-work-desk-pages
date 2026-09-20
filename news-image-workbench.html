@@ -253,7 +253,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <p>一則新聞，一次處理整組圖片。</p>
     </div>
     <div class="top-right">
-      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.5</div>
+      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.6</div>
       <div class="top-export">
         <select id="exportFormat" aria-label="輸出格式">
           <option value="jpeg">JPG</option>
@@ -280,12 +280,12 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <div class="filename-box">
         <div class="section-title" style="margin:0">下載檔名</div>
         <input id="filenameBaseInput" type="text" placeholder="會自動抓第一張圖片檔名，例如 ip260903ccpa01">
-        <div class="small-note">系統會自動在前面加 <b>w</b>，再依輸出類型加尾巴：1200 無標 = <code>-small</code>、1200 有題 = <code>-big</code>、1600 = <code>-lazy</code>、600 = <code>-in01 / -in02...</code>。</div>
+        <div class="small-note">系統會自動在前面加 <b>w</b>，再依輸出類型加尾巴：1200 無標 = <code>-small</code>、1200 有題 = <code>-big</code>、1600 = <code>-lazy</code>；600 會沿用每張原圖自己的檔名，再加 <code>-in</code>。</div>
         <div class="filename-preview">
           <div>1200 無標：<code id="previewSmall">wnews-small.jpg</code></div>
           <div>1200 有題：<code id="previewBig">wnews-big.jpg</code></div>
           <div>1600 FB：<code id="previewLazy">wnews-lazy.jpg</code></div>
-          <div>600 內文：<code id="previewIn">wnews-in01.jpg</code></div>
+          <div>600 內文：<code id="previewIn">wnews-in.jpg</code></div>
         </div>
       </div>
 
@@ -302,7 +302,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
         1200 / 1600：點縮圖＝設為主圖。<br>
         600：點縮圖＝切換正在調整的內文圖。<br>
         在大圖上直接拖動位置；拖右下角 ↘ 手柄可直接放大 / 縮小。<br><br>
-        1I.5：1200 / 1600 保留二圖版型與自動下載命名；三行標題新增可調行距。
+        1I.6：600 內文圖改用各自原始檔名輸出；例如 ip260920ccpa07 → wip260920ccpa07-in。重名時自動加 -2 / -3。
       </div>
     </section>
 
@@ -745,13 +745,22 @@ function exportBaseName(){
   const base=normalizedFilenameBase(state.filenameBase || 'news');
   return /^w/i.test(base) ? base : `w${base}`;
 }
+function exportBaseNameForImage(imageIndex){
+  const item=state.images[Number(imageIndex)];
+  const originalName=item&&item.file&&item.file.name ? item.file.name : '';
+  const raw=stripExtension(originalName) || `news${String(Number(imageIndex)+1).padStart(2,'0')}`;
+  const base=normalizedFilenameBase(raw);
+  return `w${base}`.slice(0,48);
+}
 function renderFilenamePreview(){
   const base=exportBaseName();
   const ext=extensionFor(exportFormat ? exportFormat.value : 'jpeg');
   previewSmall.textContent=`${base}-small.${ext}`;
   previewBig.textContent=`${base}-big.${ext}`;
   previewLazy.textContent=`${base}-lazy.${ext}`;
-  previewIn.textContent=`${base}-in01.${ext}`;
+  const previewIndex=state.images.length ? Math.min(state.current600,state.images.length-1) : 0;
+  const inBase=state.images.length ? exportBaseNameForImage(previewIndex) : 'wnews';
+  previewIn.textContent=`${inBase}-in.${ext}`;
   if(filenameBaseInput && document.activeElement!==filenameBaseInput){
     filenameBaseInput.value=state.filenameBase || '';
   }
@@ -1385,7 +1394,25 @@ function filenameForSpec(spec,format){
   if(spec.kind==='1200-title') return `${base}-big.${ext}`;
   if(spec.kind==='1200-clean') return `${base}-small.${ext}`;
   if(spec.kind==='1600') return `${base}-lazy.${ext}`;
-  return `${base}-in${String(spec.imageIndex+1).padStart(2,'0')}.${ext}`;
+  const imageBase=exportBaseNameForImage(spec.imageIndex);
+  return `${imageBase}-in.${ext}`;
+}
+function uniqueExportFilename(filename,usedNames){
+  if(!usedNames.has(filename)){
+    usedNames.add(filename);
+    return filename;
+  }
+  const match=String(filename).match(/^(.*?)(\.[^.]+)$/);
+  const stem=match?match[1]:String(filename);
+  const ext=match?match[2]:'';
+  let n=2;
+  let candidate=`${stem}-${n}${ext}`;
+  while(usedNames.has(candidate)){
+    n+=1;
+    candidate=`${stem}-${n}${ext}`;
+  }
+  usedNames.add(candidate);
+  return candidate;
 }
 async function ensureImageReady(img){
   if(img.complete && img.naturalWidth) return;
@@ -1727,12 +1754,14 @@ async function downloadAllExports(){
     downloadCurrentBtn.disabled=true;
     downloadAllBtn.disabled=true;
     const files=[];
+    const usedNames=new Set();
     for(let i=0;i<specs.length;i++){
       const spec=specs[i];
       setExportStatus(`正在製作 ${i+1} / ${specs.length}…`,true);
       const canvas=await renderExportCanvas(spec);
       const blob=await canvasToBlob(canvas,format);
-      files.push({name:filenameForSpec(spec,format),blob});
+      const filename=uniqueExportFilename(filenameForSpec(spec,format),usedNames);
+      files.push({name:filename,blob});
     }
     setExportStatus('正在打包 ZIP…',true);
     const zip=await makeZip(files);
