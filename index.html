@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Forest Studio Work Desk — Production Stage E.2.3.2 · GitHub Pages Link Migration</title>
+<title>Forest Studio Work Desk — Production Stage E.2.3.2 · Forest Converter Shortcut</title>
 <style>
 :root{
   --bg:#f6f7f9;
@@ -204,7 +204,7 @@ h1{
   .modules{grid-template-columns:1fr 1fr}
   .workgrid{grid-template-columns:1fr}
   .mobilebar{
-    display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:12px;right:12px;bottom:12px;
+    display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:12px;right:12px;bottom:12px;
     z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
     border:1px solid var(--line);border-radius:18px;padding:7px;box-shadow:var(--shadow)
   }
@@ -342,7 +342,7 @@ h1{
 
 .section-head.compact{margin-top:26px}
 .toolstrip{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px
 }
 .toolmini{
   border:1px solid var(--line);background:rgba(255,255,255,.82);
@@ -586,6 +586,7 @@ h1{
       <button class="active" data-view="home">Today <small>HOME</small></button>
       <button data-app="desk">Desk Lah! <small>DESK</small></button>
       <button data-app="liubai">留白 <small>WRITE</small></button>
+      <button data-app="converter">Forest Converter <small>CONVERT</small></button>
       <button data-app="image">出圖工作台 <small>IMAGE</small></button>
     </div>
 
@@ -642,6 +643,12 @@ h1{
         </article>
 
         <article class="toolmini">
+          <div class="miniicon">轉</div>
+          <div><strong>Forest Converter</strong><span>簡體 ↔ 繁體 / 一鍵複製</span></div>
+          <button data-app="converter">Open</button>
+        </article>
+
+        <article class="toolmini">
           <div class="miniicon">图</div>
           <div><strong>新闻出图工作台</strong><span>1200 / 1600 / 600</span></div>
           <button data-app="image">Open</button>
@@ -683,7 +690,7 @@ h1{
         </div>
       </section>
 
-      <div class="footer">Forest Studio · Work Desk Production Stage E.2.3.2 · GitHub Pages Link Migration</div>
+      <div class="footer">Forest Studio · Work Desk Production Stage E.2.3.2 · Forest Converter Shortcut</div>
     </section>
 
 
@@ -763,6 +770,7 @@ h1{
   <button class="active" data-view="home">Today</button>
   <button data-app="desk">Desk</button>
   <button data-app="liubai">留白</button>
+  <button data-app="converter">轉換</button>
   <button data-app="image">出圖</button>
 </div>
 
@@ -793,6 +801,7 @@ function saveStore(key, value) {
 }
 
 const DESK_LAH_PRODUCTION_URL='https://moriandchen.github.io/desk-lah-pages/';
+const FOREST_CONVERTER_URL='https://moriandchen.github.io/forest-converter/';
 const appLinks = loadStore('forestWorkDeskLinks', {});
 
 // Production link migration: Desk Lah! moved from Netlify to GitHub Pages.
@@ -888,6 +897,10 @@ function openApp(key){
     openLiubaiFromDesk();
     return;
   }
+  if(key==='converter'){
+    safeOpen(FOREST_CONVERTER_URL);
+    return;
+  }
   if(key==='image'){
     const custom = String(appLinks.image||'').trim();
     safeOpen(custom || 'news-image-workbench.html');
@@ -911,7 +924,7 @@ if(editLinks){
   editLinks.addEventListener('click',()=>{
     const keys=[
       ['desk','Desk Lah!'],
-      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.5）']
+      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.6）']
     ];
     let next={...appLinks};
     for(const [key,label] of keys){
