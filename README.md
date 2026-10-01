@@ -1,26 +1,48 @@
-# Forest Studio Work Desk — Production Stage E.2.2 · Restore Workflow Actions
+# Desk Lah! V1 Maintenance — Photo Restore 006
 
-This is the corrected simplified baseline.
+- Fixes reconnect/sign-in flow where Cloud draft text could be pulled while Cloud originals were not downloaded into the device IndexedDB cache.
+- Storage re-check now immediately pulls draft text + Cloud originals and retries pending local photo uploads.
+- Sign-in now verifies Storage and pulls original photos in the same flow.
+- Preserves Photo Sync Hotfix 004 and Leave Ledger Compact 005 behavior.
 
-Keep:
-- Work Tools: Desk Lah!, 留白, 新聞出圖工作台
-- No Continue Working section
-- No 工作紀錄 tool
-- Production Workflow card keeps both quick actions:
-  - Open Desk Lah!
-  - Open 留白
-- Desk Lah! -> Work Desk -> Send to 留白 handoff remains intact
-- Pinned Document remains
-- Local Bridge 007 integration remains
-- Bundled News Image Workbench 1I.4 remains unchanged
+# Desk Lah! V1 — Deployment / PWA Pack
 
-Why E.2.2
-E.2.1 removed the two workflow quick-action buttons, but they are not redundant: they are direct launch shortcuts, while the incoming Desk Lah! handoff lets Work Desk send the actual article payload straight into 留白 without copy/paste.
+This package is prepared for HTTPS static hosting and phone home-screen installation.
 
-Deploy
-Upload to the existing Work Desk GitHub repo root:
+## Important privacy change
+The company OT Claim XLSX is no longer embedded inside `index.html`. The deployed app fetches it only after login from the private Supabase Storage bucket `desk-templates`.
+
+Before the first deployed Excel export, run `06-create-private-template-storage.sql` once in Supabase SQL Editor. Then, on desktop, click `導出 OT Claim`; if no template is stored yet, Desk Lah! asks you to choose the real company `.xlsx` once and uploads it to your private user folder.
+
+## Files
+- `index.html` — sealed Desk Lah! V1 app
+- `manifest.webmanifest` — PWA install metadata
+- `sw.js` — app-shell cache
+- `icons/` — Desk Lah! home-screen icons
+- `06-create-private-template-storage.sql` — private template bucket + RLS
+
+## Deployment
+Upload the contents of this folder to an HTTPS static host. Keep all files at the same directory level shown here.
+
+## GitHub direct-upload layout
+
+This package is intentionally FLAT for GitHub web upload.
+Upload every file in this folder directly to the repository root.
+
+The repository root should contain:
 - index.html
-- news-image-workbench.html
+- manifest.webmanifest
+- sw.js
+- apple-touch-icon.png
+- icon-192.png
+- icon-512.png
+- icon.svg
 
-Suggested commit:
-Work Desk: restore workflow quick actions (Stage E.2.2)
+No `icons/` folder is required in this version.
+
+## Maintenance Hotfix 004 — Photo Cloud Sync
+Diagnostic 003 confirmed `400 InvalidRequest: No content provided` during Storage Upload for iPhone/IndexedDB photos. Hotfix 004 sends IndexedDB photo bytes as ArrayBuffer instead of Blob/FormData, while preserving original MIME type and metadata.
+
+
+## Maintenance UX 005 — Compact Leave Ledger
+Leave records are now condensed for faster mobile scanning: date stays left, leave type/note stays center, day amount stays right on the same row. Empty notes no longer duplicate the day count, and long notes truncate cleanly. OT, Cloud sync, balances, Excel, and photo-sync Hotfix 004 are unchanged.
