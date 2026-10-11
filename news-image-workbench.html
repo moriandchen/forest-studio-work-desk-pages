@@ -243,6 +243,81 @@ input[type=range]{width:100%;accent-color:var(--green)}
   .tabs{grid-template-columns:1fr 1fr}
   .controls-inner{grid-template-columns:1fr}
 }
+
+/* =========================================================
+   Prototype 1I.7 · Workspace Polish
+   視覺 / 版面優化，不改 1I.6 已 PASS 功能。
+   ========================================================= */
+:root{
+  --bg:#f4f6f4;
+  --paper:#ffffff;
+  --ink:#18352f;
+  --muted:#78857f;
+  --line:#e2e8e4;
+  --green:#238d6d;
+  --green-soft:#edf7f2;
+  --orange:#e99524;
+  --shadow:0 10px 34px rgba(27,55,46,.055);
+}
+body{background:linear-gradient(180deg,#f7f8f6 0,#f3f5f3 100%)}
+.app{max-width:1760px;padding:18px 20px 24px}
+.top{margin-bottom:14px;min-height:72px}
+.brand h1{font-size:27px;letter-spacing:-.02em}
+.brand p{margin-top:3px;font-size:13px}
+.phase{background:#edf7f2;border:1px solid #dcece5;padding:7px 10px;border-radius:999px;letter-spacing:.08em;font-size:11px}
+.top-export{border-radius:16px;padding:6px;box-shadow:0 7px 24px rgba(27,55,46,.06)}
+.top-export .btn,.top-export select{height:44px}
+.grid{grid-template-columns:280px minmax(0,1fr) 310px;gap:14px;align-items:start}
+.panel{border-radius:20px;box-shadow:var(--shadow)}
+.left{min-height:0;padding:16px;display:flex;flex-direction:column}
+.left>.section-title:first-child{order:1}
+#headline{order:2}
+.drop{order:3}
+#fileInput{order:4}
+.meta{order:5}
+.thumbs{order:6}
+.filename-box{order:7}
+.help{order:8}
+textarea{min-height:96px;border-radius:13px;padding:11px 12px;line-height:1.55;background:#fcfdfc}
+.drop{margin-top:12px;padding:20px 12px;border-radius:14px;background:#fafcfb}
+.drop:hover{background:#f3f8f5;border-color:#9fbbae}
+.meta{margin:16px 0 9px}
+.thumbs{gap:7px}
+.thumb{border-radius:10px}
+.filename-box{margin-top:16px;padding:11px 12px;border-radius:13px;background:#f8faf9}
+.filename-box input{margin-top:6px;padding:9px 10px;border-radius:9px;font-size:12px}
+.filename-box .small-note{margin-top:7px;font-size:10.5px;line-height:1.45}
+.filename-preview{margin-top:7px;gap:2px;font-size:10.5px;line-height:1.45}
+.filename-preview code{padding:1px 5px;border-radius:6px}
+.help{margin-top:12px;padding:10px 11px;border-radius:12px;font-size:11px;line-height:1.55;background:#f5f8f6}
+.work{min-height:0;padding:12px}
+.tabs{border-radius:15px;padding:4px;gap:3px;background:#eef2ef}
+.tab{padding:10px 8px;border-radius:11px;font-size:13px}
+.tab.on{box-shadow:0 3px 10px rgba(24,53,47,.07)}
+.stage-wrap{padding:16px 0 8px}
+.stage{border-radius:14px;box-shadow:inset 0 0 0 1px #dbe3df,0 8px 24px rgba(29,55,46,.035)}
+.stage.r1200{max-width:100%}
+.stage.r1600{max-width:min(100%,760px)}
+.stage.r600{max-width:min(100%,900px)}
+.tag{top:10px;left:10px;padding:5px 8px;font-size:11px;background:rgba(255,255,255,.92)}
+.drag-tip{right:10px;bottom:10px;padding:5px 8px;font-size:10px}
+.footer-note{margin-top:10px;padding:11px 4px 2px;font-size:11px}
+.controls{min-height:0;padding:16px}
+@media(min-width:1121px){.controls{top:88px;max-height:calc(100vh - 106px);border-radius:20px}}
+.control-block{padding-bottom:15px;margin-bottom:15px}
+.control-label{margin-bottom:9px;font-size:14px}
+.btn{border-radius:10px;padding:9px 10px}
+.segment{gap:6px}
+.control-row{margin-top:10px}.mini-label{margin-bottom:5px}.slider-row{margin-top:11px}
+.color-grid,.dual-color-grid{gap:6px;margin-top:9px}
+.dual-color-card{padding:8px;border-radius:10px}
+.logo-pos-grid,.align-segment,.move-grid{gap:6px}
+.layout-row{margin-top:9px}
+.title-mode-note,.small-note{line-height:1.45}
+input[type=range]{height:18px}
+@media(min-width:1121px) and (max-width:1400px){.app{padding-left:14px;padding-right:14px}.grid{grid-template-columns:260px minmax(0,1fr) 290px;gap:12px}}
+@media(max-width:1120px){.grid{grid-template-columns:280px minmax(0,1fr)}}
+
 </style>
 </head>
 <body>
@@ -253,7 +328,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <p>一則新聞，一次處理整組圖片。</p>
     </div>
     <div class="top-right">
-      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.6</div>
+      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.7</div>
       <div class="top-export">
         <select id="exportFormat" aria-label="輸出格式">
           <option value="jpeg">JPG</option>
@@ -302,7 +377,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
         1200 / 1600：點縮圖＝設為主圖。<br>
         600：點縮圖＝切換正在調整的內文圖。<br>
         在大圖上直接拖動位置；拖右下角 ↘ 手柄可直接放大 / 縮小。<br><br>
-        1I.6：600 內文圖改用各自原始檔名輸出；例如 ip260920ccpa07 → wip260920ccpa07-in。重名時自動加 -2 / -3。
+        1I.7：版面視覺優化。左欄降噪、中央預覽放大、右側工具更舒展；1I.6 的輸出與命名規則維持不變。
       </div>
     </section>
 
