@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Forest Studio Work Desk — Production Stage E.2.3.3.1 · Pinned Links Scroll Fix</title>
+<title>Forest Studio Work Desk — Production Stage E.2.4 · Video Desk Shortcut</title>
 <style>
 :root{
   --bg:#f6f7f9;
@@ -204,7 +204,7 @@ h1{
   .modules{grid-template-columns:1fr 1fr}
   .workgrid{grid-template-columns:1fr}
   .mobilebar{
-    display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:12px;right:12px;bottom:12px;
+    display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:12px;right:12px;bottom:12px;
     z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
     border:1px solid var(--line);border-radius:18px;padding:7px;box-shadow:var(--shadow)
   }
@@ -411,6 +411,7 @@ h1{
 }
 @media(max-width:620px){
   .toolstrip{grid-template-columns:1fr}
+  .video-desk-only{display:none!important}
   .focus-main{padding:22px}
   .focus-main h2{font-size:22px}
   .workflow-note{align-items:flex-start;flex-direction:column}
@@ -445,25 +446,12 @@ h1{
 .settings-sheet.open{display:flex}
 .settings-panel{
   width:min(560px,94vw);
-  max-height:calc(100vh - 40px);
   background:#fff;border:1px solid var(--line);
   border-radius:24px;box-shadow:0 30px 80px rgba(35,52,68,.18);
-  padding:24px;
-  display:flex;flex-direction:column;
-  overflow:hidden
+  padding:24px
 }
 .settings-panel h3{margin:0;font-size:19px;color:var(--heading)}
 .settings-panel .hint{margin:6px 0 20px;color:var(--muted);font-size:12px;line-height:1.6}
-#pinnedForm{
-  min-height:0;
-  overflow-y:auto;
-  padding-right:6px;
-  margin-right:-6px;
-  overscroll-behavior:contain
-}
-#pinnedForm::-webkit-scrollbar{width:7px}
-#pinnedForm::-webkit-scrollbar-thumb{background:#d8e0e7;border-radius:999px}
-#pinnedForm::-webkit-scrollbar-track{background:transparent}
 .form-row{display:grid;gap:7px;margin-bottom:14px}
 .form-row label{font-size:11px;font-weight:800;letter-spacing:.08em;color:#7a8998}
 .form-row input{
@@ -471,17 +459,9 @@ h1{
   border-radius:12px;padding:12px 13px;outline:none;font-size:14px
 }
 .form-row input:focus{border-color:#b7c7d6;background:white}
-.sheet-actions{
-  flex:0 0 auto;
-  display:flex;justify-content:flex-end;gap:9px;
-  margin:16px -24px -24px;
-  padding:14px 24px 18px;
-  border-top:1px solid var(--line-soft);
-  background:rgba(255,255,255,.97);
-  backdrop-filter:blur(10px)
-}
+.sheet-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
 .sheet-actions button{
-  border-radius:11px;padding:10px 14px;font-size:12px;font-weight:700
+  border-radius:11px;padding:9px 13px;font-size:12px;font-weight:700
 }
 .sheet-cancel{border:1px solid var(--line);background:white;color:var(--ink)}
 .sheet-save{border:0;background:#344b5e;color:white}
@@ -492,37 +472,6 @@ h1{
 }
 .focus-side .doc-actions{margin-top:auto;display:flex;align-items:center;gap:8px}
 .focus-side .doc-open{margin-top:0}
-.pinned-list{display:grid;gap:8px;margin:14px 0 12px}
-.pinned-item{
-  width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;
-  padding:10px 11px;display:grid;grid-template-columns:minmax(0,1fr) auto;
-  gap:10px;align-items:center;text-align:left;color:var(--ink)
-}
-.pinned-item:hover{background:var(--panel-soft)}
-.pinned-copy{min-width:0}
-.pinned-copy strong{
-  display:block;font-size:12.5px;color:var(--heading);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-}
-.pinned-copy small{
-  display:block;margin-top:2px;font-size:10.5px;color:var(--muted);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-}
-.pinned-open-label{font-size:10px;font-weight:800;color:var(--accent-strong)}
-.pinned-item.empty .pinned-copy strong{color:#8896a3;font-weight:700}
-.pinned-item.empty .pinned-open-label{color:#98a5b1}
-.pinned-edit-all{
-  border:0;background:transparent;color:var(--muted);
-  font-size:10px;padding:6px 0
-}
-.pin-group{
-  border-top:1px solid var(--line-soft);padding-top:14px;margin-top:14px
-}
-.pin-group:first-child{border-top:0;padding-top:0;margin-top:0}
-.pin-group-title{
-  font-size:10px;font-weight:900;letter-spacing:.1em;color:var(--accent-strong);
-  margin-bottom:10px
-}
 .resume-row .edit-mini{
   border:0;background:transparent;color:#8b98a6;font-size:10px;padding:5px
 }
@@ -640,11 +589,12 @@ h1{
       <button data-app="liubai">留白 <small>WRITE</small></button>
       <button data-app="converter">Forest Converter <small>CONVERT</small></button>
       <button data-app="image">出圖工作台 <small>IMAGE</small></button>
+      <button class="video-desk-only" data-app="video">Video Desk <small>VIDEO</small></button>
     </div>
 
     <div class="sidebar-note">
       <div class="kicker">WORKFLOW</div>
-      <p>手機收資料 → 電腦整理 → 寫稿 → 出圖 → 完成。</p>
+      <p>手機收資料 → 電腦整理 → 寫稿 → 出圖 / 剪片 → 完成。</p>
     </div>
   </aside>
 
@@ -706,6 +656,12 @@ h1{
           <button data-app="image">Open</button>
         </article>
 
+        <article class="toolmini video-desk-only">
+          <div class="miniicon">▶</div>
+          <div><strong>Video Desk</strong><span>本機剪接 / 合併 · 先開啟 Start Video Desk.bat</span></div>
+          <button data-app="video">Open</button>
+        </article>
+
       </section>
 
       <section class="today-focus">
@@ -723,38 +679,12 @@ h1{
         </article>
 
         <aside class="focus-side">
-          <div class="label">PINNED DOCUMENTS</div>
-          <h3>最常用文件</h3>
-          <p>最多固定 3 個常用文件或連結，直接從 Work Desk 打開。</p>
-
-          <div class="pinned-list">
-            <button class="pinned-item" type="button" data-pin-open="0">
-              <span class="pinned-copy">
-                <strong id="pinnedTitle0">最常用文件</strong>
-                <small id="pinnedDesc0">把每天最常開的文件放在這裡。</small>
-              </span>
-              <span class="pinned-open-label">OPEN</span>
-            </button>
-
-            <button class="pinned-item empty" type="button" data-pin-open="1">
-              <span class="pinned-copy">
-                <strong id="pinnedTitle1">＋ 第二個常用文件</strong>
-                <small id="pinnedDesc1">尚未設定</small>
-              </span>
-              <span class="pinned-open-label">ADD</span>
-            </button>
-
-            <button class="pinned-item empty" type="button" data-pin-open="2">
-              <span class="pinned-copy">
-                <strong id="pinnedTitle2">＋ 第三個常用文件</strong>
-                <small id="pinnedDesc2">尚未設定</small>
-              </span>
-              <span class="pinned-open-label">ADD</span>
-            </button>
-          </div>
-
+          <div class="label">PINNED DOCUMENT</div>
+          <h3 id="pinnedTitle">最常用文件</h3>
+          <p id="pinnedDesc">把每天最常开的表格、模板或参考文件固定在这里，不用再找。</p>
           <div class="doc-actions">
-            <button class="pinned-edit-all" id="editPinned">Edit links</button>
+            <button class="doc-open" id="openPinned">Open document</button>
+            <button class="doc-edit" id="editPinned">Edit</button>
           </div>
         </aside>
       </section>
@@ -768,7 +698,7 @@ h1{
         </div>
       </section>
 
-      <div class="footer">Forest Studio · Work Desk Production Stage E.2.3.3.1 · Pinned Links Scroll Fix</div>
+      <div class="footer">Forest Studio · Work Desk Production Stage E.2.4 · Video Desk Shortcut</div>
     </section>
 
 
@@ -786,57 +716,24 @@ h1{
     <p class="hint" id="sheetHint">这些资料只会保存在这部浏览器，不会修改你原本的工作系统。</p>
 
     <div id="pinnedForm">
-      <div class="pin-group">
-        <div class="pin-group-title">PINNED FILE 1</div>
-        <div class="form-row">
-          <label for="pinTitleInput0">DOCUMENT NAME</label>
-          <input id="pinTitleInput0" placeholder="例如：常用表格 / 模板">
-        </div>
-        <div class="form-row">
-          <label for="pinDescInput0">NOTE</label>
-          <input id="pinDescInput0" placeholder="例如：每個月都會用">
-        </div>
-        <div class="form-row">
-          <label for="pinUrlInput0">URL / FILE LINK</label>
-          <input id="pinUrlInput0" placeholder="https://...">
-        </div>
+      <div class="form-row">
+        <label for="pinTitleInput">DOCUMENT NAME</label>
+        <input id="pinTitleInput" placeholder="例如：OT Claim Template">
       </div>
-      <div class="pin-group">
-        <div class="pin-group-title">PINNED FILE 2</div>
-        <div class="form-row">
-          <label for="pinTitleInput1">DOCUMENT NAME</label>
-          <input id="pinTitleInput1" placeholder="例如：常用表格 / 模板">
-        </div>
-        <div class="form-row">
-          <label for="pinDescInput1">NOTE</label>
-          <input id="pinDescInput1" placeholder="例如：每個月都會用">
-        </div>
-        <div class="form-row">
-          <label for="pinUrlInput1">URL / FILE LINK</label>
-          <input id="pinUrlInput1" placeholder="https://...">
-        </div>
+      <div class="form-row">
+        <label for="pinDescInput">NOTE</label>
+        <input id="pinDescInput" placeholder="例如：每个月都会用">
       </div>
-      <div class="pin-group">
-        <div class="pin-group-title">PINNED FILE 3</div>
-        <div class="form-row">
-          <label for="pinTitleInput2">DOCUMENT NAME</label>
-          <input id="pinTitleInput2" placeholder="例如：常用表格 / 模板">
-        </div>
-        <div class="form-row">
-          <label for="pinDescInput2">NOTE</label>
-          <input id="pinDescInput2" placeholder="例如：每個月都會用">
-        </div>
-        <div class="form-row">
-          <label for="pinUrlInput2">URL / FILE LINK</label>
-          <input id="pinUrlInput2" placeholder="https://...">
-        </div>
+      <div class="form-row">
+        <label for="pinUrlInput">URL / FILE LINK</label>
+        <input id="pinUrlInput" placeholder="https://...">
       </div>
     </div>
 
 
     <div class="sheet-actions">
       <button class="sheet-cancel" id="sheetCancel">Cancel</button>
-      <button class="sheet-save" id="sheetSave">Save links</button>
+      <button class="sheet-save" id="sheetSave">Save</button>
     </div>
   </div>
 </div>
@@ -913,6 +810,7 @@ function saveStore(key, value) {
 
 const DESK_LAH_PRODUCTION_URL='https://moriandchen.github.io/desk-lah-pages/';
 const FOREST_CONVERTER_URL='https://moriandchen.github.io/forest-converter/';
+const VIDEO_DESK_DEFAULT_URL='http://127.0.0.1:8765/';
 const appLinks = loadStore('forestWorkDeskLinks', {});
 
 // Production link migration: Desk Lah! moved from Netlify to GitHub Pages.
@@ -921,7 +819,10 @@ if(!String(appLinks.desk||'').trim() || /netlify\.app/i.test(String(appLinks.des
   appLinks.desk=DESK_LAH_PRODUCTION_URL;
   saveStore('forestWorkDeskLinks', appLinks);
 }
-
+if(!String(appLinks.video||'').trim()){
+  appLinks.video=VIDEO_DESK_DEFAULT_URL;
+  saveStore('forestWorkDeskLinks',appLinks);
+}
 
 function nowCopy(){
   const d = new Date();
@@ -1017,6 +918,11 @@ function openApp(key){
     safeOpen(custom || 'news-image-workbench.html');
     return;
   }
+  if(key==='video'){
+    const url=String(appLinks.video||VIDEO_DESK_DEFAULT_URL).trim();
+    safeOpen(url);
+    return;
+  }
 
   let url = String(appLinks[key]||'').trim();
   if(!url){
@@ -1035,7 +941,8 @@ if(editLinks){
   editLinks.addEventListener('click',()=>{
     const keys=[
       ['desk','Desk Lah!'],
-      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.6）']
+      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.6）'],
+      ['video','Video Desk 本機網址（Start Video Desk.bat 自動開啟的網址）']
     ];
     let next={...appLinks};
     for(const [key,label] of keys){
@@ -1048,81 +955,24 @@ if(editLinks){
   });
 }
 
-/* ---------- Pinned Documents · 3 Links ---------- */
-const defaultPins = [
-  {
-    title:'最常用文件',
-    desc:'把每天最常開的文件放在這裡。',
-    url:''
-  },
-  {title:'',desc:'',url:''},
-  {title:'',desc:'',url:''}
-];
-
-function normalizePin(pin, fallback={}){
-  return {
-    title:String(pin&&pin.title||fallback.title||'').trim(),
-    desc:String(pin&&pin.desc||fallback.desc||'').trim(),
-    url:String(pin&&pin.url||fallback.url||'').trim()
-  };
-}
-
-function loadPinnedDocs(){
-  const stored = loadStore('forestWorkDeskPinnedV2', null);
-  if(Array.isArray(stored)){
-    return defaultPins.map((fallback,i)=>normalizePin(stored[i], fallback));
-  }
-
-  // Automatic migration from the old single pinned-document model.
-  const legacy = loadStore('forestWorkDeskPinned', null);
-  if(legacy && typeof legacy==='object'){
-    return [
-      normalizePin(legacy, defaultPins[0]),
-      normalizePin(null, defaultPins[1]),
-      normalizePin(null, defaultPins[2])
-    ];
-  }
-
-  return defaultPins.map(pin=>({...pin}));
-}
-
-let pinnedDocs = loadPinnedDocs();
+/* ---------- Pinned Document ---------- */
+const defaultPin = {
+  title:'最常用文件',
+  desc:'把每天最常开的表格、模板或参考文件固定在这里，不用再找。',
+  url:''
+};
+let pinnedDoc = loadStore('forestWorkDeskPinned', null) || defaultPin;
 
 function renderPinned(){
-  pinnedDocs.forEach((pin,i)=>{
-    const titleEl=document.querySelector('#pinnedTitle'+i);
-    const descEl=document.querySelector('#pinnedDesc'+i);
-    const button=document.querySelector('[data-pin-open="'+i+'"]');
-    const label=button ? button.querySelector('.pinned-open-label') : null;
-    const hasUrl=Boolean(String(pin.url||'').trim());
-    const hasAny=Boolean(String(pin.title||'').trim() || String(pin.desc||'').trim() || hasUrl);
-
-    if(titleEl){
-      titleEl.textContent = hasAny
-        ? (pin.title || `常用文件 ${i+1}`)
-        : `＋ ${i===1?'第二個':'第三個'}常用文件`;
-    }
-    if(descEl){
-      descEl.textContent = hasAny ? (pin.desc || '點擊開啟') : '尚未設定';
-    }
-    if(button){
-      button.classList.toggle('empty',!hasAny);
-    }
-    if(label){
-      label.textContent = hasUrl ? 'OPEN' : 'ADD';
-    }
-  });
+  document.querySelector('#pinnedTitle').textContent = pinnedDoc.title || defaultPin.title;
+  document.querySelector('#pinnedDesc').textContent = pinnedDoc.desc || defaultPin.desc;
 }
 renderPinned();
 
-document.querySelectorAll('[data-pin-open]').forEach(button=>{
-  button.addEventListener('click',()=>{
-    const index=Number(button.dataset.pinOpen);
-    const pin=pinnedDocs[index];
-    if(!pin || !safeOpen(pin.url)){
-      openSheet();
-    }
-  });
+document.querySelector('#openPinned').addEventListener('click',()=>{
+  if(!safeOpen(pinnedDoc.url)){
+    openSheet('pinned');
+  }
 });
 
 /* ---------- Settings Sheet ---------- */
@@ -1132,14 +982,11 @@ const pinnedForm = document.querySelector('#pinnedForm');
 function openSheet(){
   sheet.classList.add('open');
   sheet.setAttribute('aria-hidden','false');
-  document.querySelector('#sheetTitle').textContent = 'Edit Pinned Documents';
+  document.querySelector('#sheetTitle').textContent = 'Edit Pinned Document';
   pinnedForm.style.display = '';
-
-  pinnedDocs.forEach((pin,i)=>{
-    document.querySelector('#pinTitleInput'+i).value = pin.title || '';
-    document.querySelector('#pinDescInput'+i).value = pin.desc || '';
-    document.querySelector('#pinUrlInput'+i).value = pin.url || '';
-  });
+  document.querySelector('#pinTitleInput').value = pinnedDoc.title || '';
+  document.querySelector('#pinDescInput').value = pinnedDoc.desc || '';
+  document.querySelector('#pinUrlInput').value = pinnedDoc.url || '';
 }
 function closeSheet(){
   sheet.classList.remove('open');
@@ -1151,15 +998,16 @@ document.querySelector('#sheetCancel').addEventListener('click',closeSheet);
 sheet.addEventListener('click',(e)=>{ if(e.target===sheet) closeSheet(); });
 
 document.querySelector('#sheetSave').addEventListener('click',()=>{
-  pinnedDocs = [0,1,2].map(i=>({
-    title:document.querySelector('#pinTitleInput'+i).value.trim(),
-    desc:document.querySelector('#pinDescInput'+i).value.trim(),
-    url:document.querySelector('#pinUrlInput'+i).value.trim()
-  }));
-  saveStore('forestWorkDeskPinnedV2', pinnedDocs);
+  pinnedDoc = {
+    title:document.querySelector('#pinTitleInput').value.trim(),
+    desc:document.querySelector('#pinDescInput').value.trim(),
+    url:document.querySelector('#pinUrlInput').value.trim()
+  };
+  saveStore('forestWorkDeskPinned', pinnedDoc);
   renderPinned();
   closeSheet();
 });
+
 
 /* ---------- Production Stage E.2.3 Handoff ----------
 Phone Desk Lah! -> private Supabase Cloud Inbox -> Desktop Work Desk
