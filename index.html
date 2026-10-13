@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Forest Studio Work Desk — Production Stage E.2.4 · Video Desk Shortcut</title>
+<title>Forest Studio Work Desk — Production Stage E.2.5 · Daily Workflow</title>
 <style>
 :root{
   --bg:#f6f7f9;
@@ -698,7 +698,12 @@ h1{
         </div>
       </section>
 
-      <div class="footer">Forest Studio · Work Desk Production Stage E.2.4 · Video Desk Shortcut</div>
+      <section class="card" style="margin-top:20px" aria-label="工作狀態">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><strong>工作狀態</strong><button class="ghost-btn" id="checkTools" type="button">檢查連線</button></div>
+<p id="localToolsState" role="status" aria-live="polite" style="font-size:12px;line-height:1.7;color:var(--muted)">留白與 Video Desk 在電腦本機執行；按檢查連線確認狀態。</p>
+<div id="recentTools" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+<details style="margin-top:14px;font-size:12px;color:var(--muted)"><summary>本次更新版本</summary><p>Work Desk E.2.5 · Desk Lah! 008 · 留白 v1.18 Safe 015 · Converter V1.1 · 出圖 1I.8 · Video Desk V0.3.7</p><p>此處列出更新包版本；各工具更新後，請在工具內確認版號。</p></details></section>
+<div class="footer">Forest Studio · Work Desk Production Stage E.2.5 · Daily Workflow</div>
     </section>
 
 
@@ -811,6 +816,7 @@ function saveStore(key, value) {
 const DESK_LAH_PRODUCTION_URL='https://moriandchen.github.io/desk-lah-pages/';
 const FOREST_CONVERTER_URL='https://moriandchen.github.io/forest-converter/';
 const VIDEO_DESK_DEFAULT_URL='http://127.0.0.1:8765/';
+function loadSessionHandoff(){try{return JSON.parse(sessionStorage.getItem('forestWorkDeskHandoff')||'null')}catch(_){return null}}
 const appLinks = loadStore('forestWorkDeskLinks', {});
 
 // Production link migration: Desk Lah! moved from Netlify to GitHub Pages.
@@ -850,6 +856,7 @@ document.querySelectorAll('[data-view]').forEach(btn=>{
 
 function safeOpen(url){
   if(!url) return false;
+  try{if(!['http:','https:'].includes(new URL(url,location.href).protocol)) return false;}catch(_){return false;}
   window.open(url,'_blank','noopener');
   return true;
 }
@@ -884,12 +891,12 @@ async function openLiubaiFromDesk(){
     if(response.ok) return;
 
     if(info.version !== '007'){
-      alert('Work Desk 已找到 Local Bridge，但需要更新至 007 才能由 Work Tools 直接打開留白。');
+      alert('Work Desk 已找到 Local Bridge，但請確認支援開啟留白的版本 才能由 Work Tools 直接打開留白。');
       return;
     }
     throw new Error('open-liubai');
   }catch(error){
-    alert('Work Desk 暫時無法打開本機留白。\\n\\n請確認 Forest Studio Local Bridge 007 正在運行，再試一次。');
+    alert('Work Desk 暫時無法打開本機留白。\\n\\n請確認 Forest Studio Local Bridge 008 正在運行，再試一次。');
   }
 }
 
@@ -905,6 +912,8 @@ function saveSingleLink(key, label){
 }
 
 function openApp(key){
+  const history=loadStore('forestWorkDeskRecentToolsV1',[]).filter(x=>x.key!==key);
+  history.unshift({key,at:Date.now()});saveStore('forestWorkDeskRecentToolsV1',history.slice(0,5));renderRecentTools();
   if(key==='liubai'){
     openLiubaiFromDesk();
     return;
@@ -941,7 +950,7 @@ if(editLinks){
   editLinks.addEventListener('click',()=>{
     const keys=[
       ['desk','Desk Lah!'],
-      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.6）'],
+      ['image','新聞出圖工作台（留空 = 使用 Work Desk 內建 1I.8）'],
       ['video','Video Desk 本機網址（Start Video Desk.bat 自動開啟的網址）']
     ];
     let next={...appLinks};
@@ -1024,7 +1033,7 @@ let cloudInboxInFlight=false;
 
 let activeHandoff = loadStore(
   WORK_DESK_ACTIVE_HANDOFF_KEY,
-  JSON.parse(sessionStorage.getItem('forestWorkDeskHandoff') || 'null')
+  loadSessionHandoff()
 );
 
 const handoffCard = document.querySelector('#handoffCard');
@@ -1195,7 +1204,7 @@ function renderHandoff(){
   handoffCard.classList.add('show');
   handoffTitle.textContent = activeHandoff.title || '未命名稿件';
   const clean = (activeHandoff.body || '').replace(/\s+/g,' ').trim();
-  handoffPreview.textContent = clean ? clean.slice(0,110) + (clean.length>110?'…':'') : '这份稿件没有文字内容。';
+  handoffPreview.textContent = (clean ? clean.slice(0,110) + (clean.length>110?'…':'') : '這份稿件沒有文字內容。') + ' · ' + Array.from(activeHandoff.body||'').length + ' 字 · 收件 ' + new Date(activeHandoff.receivedAt).toLocaleTimeString('zh-Hant',{hour:'2-digit',minute:'2-digit'}) + ' · 文字交接';
 }
 
 async function pollWorkDeskCloudInbox(){
@@ -1350,6 +1359,8 @@ async function sendCurrentHandoffToLiubai(){
   if(!activeHandoff) return;
 
   const sendButton = document.querySelector('#sendToLiubai');
+  if(sendButton?.disabled) return;
+  if(sendButton) sendButton.disabled=true;
   const originalLabel = sendButton ? sendButton.textContent : 'Send to 留白 →';
   const transferId = `liubai-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`;
   const sourceQueueId=activeHandoff.queueId||'';
@@ -1421,7 +1432,7 @@ async function sendCurrentHandoffToLiubai(){
       ? '本机找不到留白。请先安装／更新 Liubai Local Bridge 版本。'
       : 'Work Desk 暂时无法连接本机 Local Bridge。\\n\\n如果 Chrome 出现「Access other apps and services on this device」，请选择 Allow，然后保持这个页面开启再试一次。\\n\\n若 http://127.0.0.1:47831/health 能显示 ok:true，就代表 Bridge 本身正常。';
     alert(message);
-  }
+  }finally{if(sendButton) sendButton.disabled=false;}
 }
 
 window.addEventListener('message',(event)=>{
@@ -1464,9 +1475,28 @@ document.addEventListener('visibilitychange',()=>{
 });
 window.addEventListener('focus',()=>pollWorkDeskCloudInbox());
 
+
+function renderRecentTools(){
+ const host=document.getElementById('recentTools');if(!host)return;host.replaceChildren();
+ const labels={desk:'Desk Lah!',liubai:'留白',converter:'Converter',image:'出圖',video:'Video Desk'};
+ for(const item of loadStore('forestWorkDeskRecentToolsV1',[])){if(!labels[item.key])continue;const b=document.createElement('button');b.className='ghost-btn';b.textContent='最近 · '+labels[item.key];b.onclick=()=>openApp(item.key);host.append(b);}
+}
+async function checkLocalTools(){
+ const b=document.getElementById('checkTools'),out=document.getElementById('localToolsState');b.disabled=true;out.textContent='正在檢查本機工具…';
+ const checks=await Promise.allSettled([
+  bridgeFetch('/health',{},4500).then(async r=>{if(!r.ok)throw Error();const d=await r.json();if(!d.ok)throw Error();return '留白：Bridge '+(d.version||'')+' 已連線';}),
+  (async()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),4500);try{const u=new URL(String(appLinks.video||VIDEO_DESK_DEFAULT_URL));u.pathname='/api/health';u.search='';u.hash='';const r=await fetch(u,{signal:c.signal,cache:'no-store',credentials:'omit',targetAddressSpace:'loopback'});if(!r.ok)throw Error();const d=await r.json();if(!d.ok)throw Error();return 'Video Desk：'+(d.version||'')+' 引擎已連線';}finally{clearTimeout(t)}})()
+ ]);
+ out.textContent=checks.map((r,i)=>r.status==='fulfilled'?r.value:i===0?'留白：未能確認連線，請檢查 Local Bridge 與瀏覽器本機存取權限。':'Video Desk：未能確認連線，請先開 Start Video Desk.bat；舊版亦可能尚未支援此檢查。').join('　／　');b.disabled=false;
+}
+document.getElementById('checkTools').onclick=checkLocalTools;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSheet();closeCloudSetup();}});
+renderRecentTools();
+
 initializeCloudInbox();
 
 
 </script>
 </body>
 </html>
+

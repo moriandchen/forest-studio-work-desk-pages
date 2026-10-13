@@ -245,7 +245,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
 }
 
 /* =========================================================
-   Prototype 1I.7 · Workspace Polish
+   Prototype 1I.8 · Workspace Polish
    視覺 / 版面優化，不改 1I.6 已 PASS 功能。
    ========================================================= */
 :root{
@@ -328,7 +328,7 @@ input[type=range]{height:18px}
       <p>一則新聞，一次處理整組圖片。</p>
     </div>
     <div class="top-right">
-      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.7</div>
+      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.8</div>
       <div class="top-export">
         <select id="exportFormat" aria-label="輸出格式">
           <option value="jpeg">JPG</option>
@@ -377,7 +377,7 @@ input[type=range]{height:18px}
         1200 / 1600：點縮圖＝設為主圖。<br>
         600：點縮圖＝切換正在調整的內文圖。<br>
         在大圖上直接拖動位置；拖右下角 ↘ 手柄可直接放大 / 縮小。<br><br>
-        1I.7：版面視覺優化。左欄降噪、中央預覽放大、右側工具更舒展；1I.6 的輸出與命名規則維持不變。
+        1I.8：版面視覺優化。左欄降噪、中央預覽放大、右側工具更舒展；1I.6 的輸出與命名規則維持不變。
       </div>
     </section>
 
@@ -1801,6 +1801,7 @@ async function downloadCurrentExport(){
     return;
   }
   const format=exportFormat.value;
+  if(!confirmExportList([spec],format))return;
   try{
     downloadCurrentBtn.disabled=true;
     downloadAllBtn.disabled=true;
@@ -1825,6 +1826,7 @@ async function downloadAllExports(){
     return;
   }
   const format=exportFormat.value;
+  if(!confirmExportList(specs,format))return;
   try{
     downloadCurrentBtn.disabled=true;
     downloadAllBtn.disabled=true;
@@ -1918,6 +1920,42 @@ function renderStage(){
   renderLogoControls();
   renderTitleControls();
 }
+
+const PRESET_KEY='forestNewsStylePresetV1';
+const presetFields=['titleStyles','logoSizes','logoPositions'];
+const factoryPreset=Object.fromEntries(presetFields.map(k=>[k,JSON.parse(JSON.stringify(state[k]))]));
+function applyStylePreset(preset){
+ if(!preset||preset.version!==1||!preset.settings)throw Error('預設格式無效');
+ // Only known fields and valid value types/ranges can be restored.
+ for(const group of presetFields){
+  const saved=preset.settings[group];if(!saved||typeof saved!=='object')continue;
+  for(const [key,original] of Object.entries(factoryPreset[group])){
+   if(group==='titleStyles'){
+    const row=saved[key];if(!row||typeof row!=='object')continue;
+    for(const [field,def] of Object.entries(original)){
+     const value=row[field];
+     if(typeof def==='number'&&Number.isFinite(value)&&value>=0&&value<=500)state[group][key][field]=value;
+     else if(typeof def==='string'&&typeof value==='string'&&((field==='fontKey'&&Object.hasOwn(FONT_OPTIONS,value))||(field==='align'&&['left','center','right'].includes(value))||(/^#[0-9a-f]{6}$/i.test(value))))state[group][key][field]=value;
+    }
+   }else if(group==='logoSizes'){if(Number.isFinite(saved[key])&&saved[key]>=0&&saved[key]<=100)state[group][key]=saved[key];}
+   else if(saved[key]&&Number.isFinite(saved[key].x)&&Number.isFinite(saved[key].y)&&saved[key].x>=0&&saved[key].x<=1&&saved[key].y>=0&&saved[key].y<=1)state[group][key]={x:saved[key].x,y:saved[key].y};
+  }
+ }
+}
+function confirmExportList(specs,format){
+ const names=new Set();const rows=specs.map(x=>uniqueExportFilename(filenameForSpec(x,format),names)+' · '+x.width+' × '+x.height);
+ return window.confirm('準備輸出 '+rows.length+' 張\n\n'+rows.join('\n')+'\n\n確認檔名與張數後開始輸出。');
+}
+function initStylePreset(){
+ const bar=document.createElement('div');bar.style.cssText='display:flex;gap:7px;flex-wrap:wrap;margin:10px 0';
+ for(const [label,action] of [
+  ['保存常用設定',()=>{try{localStorage.setItem(PRESET_KEY,JSON.stringify({version:1,settings:Object.fromEntries(presetFields.map(k=>[k,state[k]]))}));setExportStatus('常用字型、標題樣式與 Logo 設定已保存；下次自動使用。')}catch(_){setExportStatus('設定未能保存，請檢查瀏覽器可用空間。')}}],
+  ['恢復預設樣式',()=>{for(const k of presetFields)state[k]=JSON.parse(JSON.stringify(factoryPreset[k]));try{localStorage.removeItem(PRESET_KEY)}catch(_){}render();setExportStatus('已恢復預設樣式。圖片與標題仍保留。')}]
+ ]){const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=action;bar.append(b);}
+ titleControlBlock.prepend(bar);
+ try{const raw=localStorage.getItem(PRESET_KEY);if(raw){applyStylePreset(JSON.parse(raw));render();}}catch(_){setExportStatus('常用設定無法讀取，已使用預設樣式。')}
+}
+
 function render(){renderThumbs();renderStage();renderFilenamePreview();}
 
 document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
@@ -2167,5 +2205,6 @@ window.addEventListener('resize',()=>requestAnimationFrame(()=>{applyTransform()
 state.headline=headline.value;
 render();
 </script>
+<script>initStylePreset();</script>
 </body>
 </html>
