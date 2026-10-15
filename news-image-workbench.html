@@ -331,7 +331,7 @@ input[type=range]{height:18px}
       <p>一則新聞，一次處理整組圖片。</p>
     </div>
     <div class="top-right">
-      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.8</div>
+      <div class="phase">FUNCTIONAL PROTOTYPE · 1I.8.1</div>
       <div class="top-export">
         <select id="exportFormat" aria-label="輸出格式">
           <option value="jpeg">JPG</option>
@@ -380,7 +380,7 @@ input[type=range]{height:18px}
         1200 / 1600：點縮圖＝設為主圖。<br>
         600：點縮圖＝切換正在調整的內文圖。<br>
         在大圖上直接拖動位置；拖右下角 ↘ 手柄可直接放大 / 縮小。<br><br>
-        1I.8：1600 新增黑底資訊條，可調透明度與高度；適合原圖下方留白時補成資訊底。
+        1I.8.1：1600 黑底資訊條移到「圖片填充」下方，更符合出圖調整順序；功能維持 1I.8。
       </div>
     </section>
 
@@ -530,23 +530,6 @@ input[type=range]{height:18px}
           <div class="small-note">兩行模式：兩行可各自配色、各自字號。三行模式：三行可各自配色、各自字號。1600 FB 固定套用橙色框＋底部網址。</div>
         </div>
 
-        <div class="control-block" id="lazyBarBlock" style="display:none">
-          <div class="control-label">1600 黑底資訊條</div>
-          <div class="segment">
-            <button class="btn on" id="lazyBarOff" type="button">不要黑底</button>
-            <button class="btn" id="lazyBarOn" type="button">顯示黑底</button>
-          </div>
-          <div class="control-row">
-            <div class="mini-label"><span>透明度</span><b id="lazyBarOpacityValue">55%</b></div>
-            <input id="lazyBarOpacitySlider" type="range" min="0" max="100" value="55">
-          </div>
-          <div class="control-row">
-            <div class="mini-label"><span>高度</span><b id="lazyBarHeightValue">28%</b></div>
-            <input id="lazyBarHeightSlider" type="range" min="8" max="65" value="28">
-          </div>
-          <div class="small-note">只作用在 1600 懶人包，固定貼齊底部。適合原圖填不滿時，補成可用的資訊底。</div>
-        </div>
-
         <div class="control-block" id="layoutControlBlock">
           <div class="control-label">圖片版型</div>
           <div class="layout-segment">
@@ -598,6 +581,23 @@ input[type=range]{height:18px}
             <span class="zoom-value" id="zoomValue">100%</span>
           </div>
           <div class="small-note">Fit 看完整張圖；Fill 會填滿畫布。再拖動 / 放大微調。</div>
+        </div>
+
+        <div class="control-block" id="lazyBarBlock" style="display:none">
+          <div class="control-label">1600 黑底資訊條</div>
+          <div class="segment">
+            <button class="btn on" id="lazyBarOff" type="button">不要黑底</button>
+            <button class="btn" id="lazyBarOn" type="button">顯示黑底</button>
+          </div>
+          <div class="control-row">
+            <div class="mini-label"><span>透明度</span><b id="lazyBarOpacityValue">55%</b></div>
+            <input id="lazyBarOpacitySlider" type="range" min="0" max="100" value="55">
+          </div>
+          <div class="control-row">
+            <div class="mini-label"><span>高度</span><b id="lazyBarHeightValue">28%</b></div>
+            <input id="lazyBarHeightSlider" type="range" min="8" max="65" value="28">
+          </div>
+          <div class="small-note">只作用在 1600 懶人包，固定貼齊底部。適合原圖填不滿時，補成可用的資訊底。</div>
         </div>
 
         <div class="control-block">
